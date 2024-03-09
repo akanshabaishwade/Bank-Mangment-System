@@ -1,0 +1,9 @@
+python3 -m venv bankvenv
+source bankvenv/bin/activate
+pip freeze > requirements.txt
+
+
+django-admin startproject bank_mangment_system
+cd bank_mangment_system
+django-admin startapp User
+django-admin startapp Services

@@ -1,0 +1,107 @@
+           Customer (1)
+               |
+           ---------> Account (N)
+           |           |
+           |           | balance
+           |           | interest_rate (optional)
+           |           | minimum_balance (optional)
+           |           | opening_date
+           |           | closed
+           |           | created_at
+           |           | updated_at
+           |
+           ---------> Transaction (N)
+                       |
+                   transaction_type
+                   |
+                   ---------> (references) Account (1)
+                               |
+                           amount
+                           |
+                           date
+                           |
+                           description (optional)
+                           |
+                           reference_number (optional)
+                           |
+                       ---------> (optional) Employee (1)
+                                   |
+                               initiated_by
+
+           Employee (1)
+               |
+           ---------> Branch (N) (optional)
+                       |
+                   manager
+                   |
+               ---------> Login (1)  (for authentication)
+                   |
+               ---------> Role (N)  (e.g., Teller, Loan Officer)
+
+           Customer (1)
+               |
+           ---------> Loan (N)
+                       |
+                   loan_type (e.g., Personal Loan, Mortgage)
+                   |
+                   amount
+                   |
+                   interest_rate
+                   |
+                   term_months
+                   |
+                   status (e.g., Pending, Approved, Rejected, Disbursed, Closed)
+                   |
+                   created_at
+                   |
+                   updated_at
+
+           Customer (1)
+               |
+           ---------> Investment (N)
+                       |
+                   investment_type (e.g., Mutual Fund, Stocks)
+                   |
+                   amount
+                   |
+                   maturity_date (optional)
+                   |
+                   expected_return (optional)
+                   |
+                   created_at
+                   |
+                   updated_at
+
+           Account (1)
+               |
+           ---------> DepositSlip (N)
+                       |
+                   amount
+                   |
+                   date
+                   |
+                   employee  (references Employee)
+                   |
+                   created_at
+
+           Account (1)
+               |
+           ---------> WithdrawalSlip (N)
+                       |
+                   amount
+                   |
+                   date
+                   |
+                   employee  (references Employee)
+                   |
+                   created_at
+
+           Loan (1)
+               |
+           ---------> LoanPayment (N)
+                       |
+                   amount
+                   |
+                   payment_date
+                   |
+                   created_at
