@@ -1,0 +1,9 @@
+api = http://127.0.0.1:8000/register/
+
+test data = {
+    "email": "test@example.com",
+    "username": "testuser",
+    "password": "testpassword",
+    "user_type": "Customer"
+}
+
