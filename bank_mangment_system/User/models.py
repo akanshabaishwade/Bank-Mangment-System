@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 
 
-
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -20,6 +19,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=100, unique=True)
@@ -32,11 +32,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     tax_id = models.CharField(max_length=100, blank=True, null=True)
     address = models.TextField(blank=True)
     country = models.CharField(max_length=100, blank=True, null=True)
-    government_issued_id = models.CharField(max_length=100, blank=True, null=True)
+    government_issued_id = models.CharField(
+        max_length=100, blank=True, null=True)
     customer_type = models.CharField(max_length=100, blank=True, null=True)
     occupation = models.CharField(max_length=100, blank=True, null=True)
     employer = models.CharField(max_length=255, blank=True, null=True)
-    communication_preferences = models.CharField(max_length=255, blank=True, null=True)
+    communication_preferences = models.CharField(
+        max_length=255, blank=True, null=True)
     UserType = (("Customer", "Customer"), ("Employee", "Employee"))
     user_type = models.CharField(max_length=256, choices=UserType)
     password = models.CharField(max_length=128)
@@ -45,12 +47,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-
-
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
-
 
     objects = CustomUserManager()
 
@@ -59,4 +57,3 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-

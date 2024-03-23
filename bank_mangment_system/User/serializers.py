@@ -3,23 +3,24 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import *
 
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = '__all__'
 
+
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password', 'phone_number', 'date_of_birth', 'tax_id', 'address', 'country', 'government_issued_id', 'customer_type', 'occupation', 'employer', 'communication_preferences', 'user_type', 'is_staff', 'is_active', 'created_at', 'updated_at')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password', 'phone_number', 'date_of_birth', 'tax_id', 'address', 'country', 'government_issued_id',
+                  'customer_type', 'occupation', 'employer', 'communication_preferences', 'user_type', 'is_staff', 'is_active', 'created_at', 'updated_at')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        validated_data['is_active'] = True 
+        validated_data['is_active'] = True
         user = CustomUser.objects.create_user(**validated_data)
         return user
-    
+
 
 class LoginSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -32,9 +33,4 @@ class LoginSerializer(TokenObtainPairSerializer):
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
 
-
         return data
-    
-
-
-

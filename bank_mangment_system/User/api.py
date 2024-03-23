@@ -13,7 +13,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import logout
 
 
-
 class RegisterApi(generics.GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -25,7 +24,6 @@ class RegisterApi(generics.GenericAPIView):
             "user": RegisterSerializer(user, context=self.get_serializer_context()).data,
             "message": "User Created Successfully. Now perform Login to get your token",
         }, status=status.HTTP_201_CREATED)
-
 
 
 class LoginApi(TokenObtainPairView):

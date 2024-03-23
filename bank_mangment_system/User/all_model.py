@@ -1,8 +1,7 @@
+from Employee.models import *
 from django.db import models
 from User.models import *
 from django_cryptography.fields import encrypt
-
-
 
 
 class Bank(models.Model):
@@ -34,14 +33,13 @@ class Employee(models.Model):
         related_name="email_Customer",
         on_delete=models.CASCADE,
     )
-    branch = models.ForeignKey(Bank, on_delete=models.CASCADE)   
+    branch = models.ForeignKey(Bank, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     yearly_salary = models.DecimalField(max_digits=10, decimal_places=2)
 
-
     def __str__(self):
-        return f"{self.employee_email.first_name} {self.employee_email.last_name} ({self.role})"  # Customize string representation
-
+        # Customize string representation
+        return f"{self.employee_email.first_name} {self.employee_email.last_name} ({self.role})"
 
 
 class Salary(models.Model):
@@ -52,21 +50,11 @@ class Salary(models.Model):
 
     def __str__(self):
         return f"{self.employee} - {self.amount} - {self.date}"
-    
 
 
+# ------------------------------------------------------------------------------------------
 
 
-
-
-#------------------------------------------------------------------------------------------
-    
-from django.db import models
-from User.models import *
-from Employee.models import *
-from django_cryptography.fields import encrypt
-
-    
 class Account(models.Model):
     customer_id = models.AutoField(primary_key=True)
     customuser_email = models.ForeignKey(
@@ -98,9 +86,6 @@ class Account(models.Model):
     )
     updated_at = models.DateTimeField(auto_now=True)
 
-
-
-
     def __str__(self):
         return f"{self.customuser_email}'s Account"
 
@@ -128,8 +113,6 @@ class Transaction(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-
-
 class Loan(models.Model):
     customer = models.ForeignKey(Account, on_delete=models.CASCADE)
     loan_type = models.CharField(max_length=100)
@@ -155,14 +138,13 @@ class Loan(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-
-
 class Investment(models.Model):
     customer = models.ForeignKey(Account, on_delete=models.CASCADE)
     investment_type = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     maturity_date = models.DateField(blank=True, null=True)
-    expected_return = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    expected_return = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         CustomUser,
@@ -177,8 +159,6 @@ class Investment(models.Model):
         on_delete=models.CASCADE,
     )
     updated_at = models.DateTimeField(auto_now=True)
-
-
 
 
 class DepositSlip(models.Model):
@@ -201,8 +181,6 @@ class DepositSlip(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-
-
 class WithdrawalSlip(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -221,8 +199,6 @@ class WithdrawalSlip(models.Model):
         on_delete=models.CASCADE,
     )
     updated_at = models.DateTimeField(auto_now=True)
-
-
 
 
 class LoanPayment(models.Model):
@@ -245,7 +221,6 @@ class LoanPayment(models.Model):
 
 
 # -----------------------------------------------------------------------------
-    
 
 
 class CustomUser(models.Model):
@@ -255,17 +230,22 @@ class CustomUser(models.Model):
     middle_name = encrypt(models.CharField(max_length=150, blank=True))
     last_name = encrypt(models.CharField(max_length=150, blank=True))
     email = encrypt(models.EmailField(unique=True))
-    phone_number = encrypt(models.CharField(max_length=20, blank=True, null=True))
+    phone_number = encrypt(models.CharField(
+        max_length=20, blank=True, null=True))
     date_of_birth = encrypt(models.DateField(blank=True, null=True))
     tax_id = encrypt(models.CharField(max_length=100, blank=True, null=True))
     address = encrypt(models.TextField(blank=True))
     country = encrypt(models.CharField(max_length=100, blank=True, null=True))
     password = encrypt(models.CharField(max_length=255))
-    government_issued_id = encrypt(models.CharField(max_length=100, blank=True, null=True))
-    customer_type = encrypt(models.CharField(max_length=100, blank=True, null=True))
-    occupation = encrypt(models.CharField(max_length=100, blank=True, null=True))
+    government_issued_id = encrypt(models.CharField(
+        max_length=100, blank=True, null=True))
+    customer_type = encrypt(models.CharField(
+        max_length=100, blank=True, null=True))
+    occupation = encrypt(models.CharField(
+        max_length=100, blank=True, null=True))
     employer = encrypt(models.CharField(max_length=255, blank=True, null=True))
-    communication_preferences = encrypt(models.CharField(max_length=255, blank=True, null=True))
+    communication_preferences = encrypt(
+        models.CharField(max_length=255, blank=True, null=True))
     UserType = (("Customer", "Customer"), ("Employee", "Employee"))
     user_type = encrypt(models.CharField(max_length=256, choices=UserType))
     is_staff = encrypt(models.BooleanField(default=False))
@@ -277,9 +257,9 @@ class CustomUser(models.Model):
     def save(self, *args, **kwargs):
         for field in self._meta.fields:
             if hasattr(field, 'encrypt') and getattr(self, field.attname):
-                setattr(self, field.attname, encrypt(getattr(self, field.attname).encode()))
+                setattr(self, field.attname, encrypt(
+                    getattr(self, field.attname).encode()))
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.email
-
