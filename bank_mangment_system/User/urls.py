@@ -1,8 +1,10 @@
 from django.urls import path
-from .api import CustomUserRegistration, CustomUserLogin, CustomUserLogout
+from .api import *
+from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
-    path('register/', CustomUserRegistration.as_view(), name='register'),
-    path('login/', CustomUserLogin.as_view(), name='login'),
-    path('logout/', CustomUserLogout.as_view(), name='logout'),
+    path('register/', RegisterApi.as_view(), name='register'),
+    path('login/', LoginApi.as_view(), name='login'),
+    path('logout/', logoutApi , name='logout'),
+
 ]

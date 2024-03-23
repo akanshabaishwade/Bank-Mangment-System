@@ -7,3 +7,10 @@ test data = {
     "user_type": "Customer"
 }
 
+
+api = http://127.0.0.1:8000/login/
+
+{
+    "email": "test@example.com",
+    "password": "testpassword"
+}
