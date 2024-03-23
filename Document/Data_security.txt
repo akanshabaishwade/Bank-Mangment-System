@@ -1,0 +1,28 @@
+#---------------------------------------------Encryption---------------------------------------------------
+
+1. Encrypt the model fields
+
+from cryptography.fernet import Fernet
+
+# Generate a key for encryption
+key = Fernet.generate_key()
+cipher_suite = Fernet(key)
+
+# Encrypt a string
+original_text = "Hello, World!"
+encrypted_text = cipher_suite.encrypt(original_text.encode())
+
+# Decrypt the encrypted string
+decrypted_text = cipher_suite.decrypt(encrypted_text).decode()
+
+print("Original:", original_text)
+print("Encrypted:", encrypted_text)
+print("Decrypted:", decrypted_text)
+
+# output
+# Original: Hello, World!
+# Encrypted: b'gAAAAABl_1Ktm2jRCL55eNxS5klUbNmpOLaalhvOrDQ9YUMw7YDduaqnsgYTV2mErCeDERlX6M39iaDuoICaIET3Aa9E6ddXBg=='
+# Decrypted: Hello, World!
+
+
+#------------------------------------------------------------------------------------------------

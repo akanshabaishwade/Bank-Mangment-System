@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from cryptography.fernet import Fernet
 
-# Create your views here.
+# Generate a new key
+key = Fernet.generate_key()
+
+# Print the key (you should store this securely in your Django settings)
+print(key)
