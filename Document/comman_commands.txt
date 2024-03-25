@@ -20,3 +20,6 @@ python manage.py createsuperuser
 npx create-react-app bank_mangment_frontend
 npm start  
 npm install
+npm i react-router-dom
+npm audit fix --force #address all issues (including breaking changes),
+npm audit fix #To address issues that do not require attention
