@@ -4,53 +4,6 @@ from User.models import *
 from django_cryptography.fields import encrypt
 
 
-class Bank(models.Model):
-    bank_id = models.AutoField(primary_key=True)
-    bank_name = encrypt(models.CharField(max_length=255))
-    branch = encrypt(models.CharField(max_length=255))
-    address = encrypt(models.CharField(max_length=255, blank=True, null=True))
-    established_date = encrypt(models.DateField(null=True, blank=True))
-
-    def __str__(self):
-        return f"{self.bank_name} - {self.branch}"
-
-
-class Role(models.Model):
-    name = models.CharField(max_length=100)
-
-
-class Employee(models.Model):
-    employee_id = models.AutoField(primary_key=True)
-    bank_name = models.ForeignKey(
-        Bank,
-        to_field="bank_id",
-        related_name="bank_id_employee",
-        on_delete=models.CASCADE,
-    )
-    employee_email = models.ForeignKey(
-        CustomUser,
-        to_field="email",
-        related_name="email_Customer",
-        on_delete=models.CASCADE,
-    )
-    branch = models.ForeignKey(Bank, on_delete=models.CASCADE)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    yearly_salary = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        # Customize string representation
-        return f"{self.employee_email.first_name} {self.employee_email.last_name} ({self.role})"
-
-
-class Salary(models.Model):
-    salary_id = models.AutoField(primary_key=True)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField()
-
-    def __str__(self):
-        return f"{self.employee} - {self.amount} - {self.date}"
-
 
 # ------------------------------------------------------------------------------------------
 
