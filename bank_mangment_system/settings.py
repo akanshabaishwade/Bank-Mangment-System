@@ -98,4 +98,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'User.CustomUser'
 
-WSGI_APPLICATION = 'bank_mangment_system.wsgi.app'
+WSGI_APPLICATION = 'bank_mangment_system.wsgi.application'
+
+
+import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bank_mangment_system.settings")
+
